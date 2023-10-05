@@ -1,0 +1,52 @@
+﻿@model Asistencia
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-primary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Editar Asistencia</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row">
+            <div class="border p-3">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="form-floatinging py-2 col-12">
+                    <label asp-for="ID_Registro" class="mb-2"></label>
+                    <input disabled asp-for="ID_Registro" class="form-control border-0 shadow" />
+                    <span asp-validation-for="ID_Registro" class="text-danger"></span>
+                </div>
+                <div class="form-floatinging py-2 col-12">
+                    <label asp-for="ID_Estudiante" class="mb-2"></label>
+                    <input asp-for="ID_Estudiante" class="form-control border-0 shadow mb-3" />
+                    <span asp-validation-for="ID_Estudiante" class="text-danger"></span>
+                </div>
+                <div class="form-floatinging py-2 col-12">
+                    <label asp-for="FechaRegistro" class="mb-2"></label>
+                    <input asp-for="FechaRegistro" class="form-control border-0 shadow mb-3" />
+                    <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+                </div>
+                <div class="form-floatinging py-2 col-12">
+                    <label asp-for="EstadoAsistencia" class="mb-2"></label>
+                    <select asp-for="EstadoAsistencia" class="form-select mb-4" aria-label="@Model.EstadoAsistencia">
+                        <option value="Presente">Presente</option>
+                        <option value="Tarde">Tarde</option>
+                        <option value="Ausente">Ausente</option>
+                    </select>
+                    <span asp-validation-for="EstadoAsistencia" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-info form-control">Editar</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Asistencia" asp-action="Index" class="btn btn-outline-primary border form-control">
+                            Back to list
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

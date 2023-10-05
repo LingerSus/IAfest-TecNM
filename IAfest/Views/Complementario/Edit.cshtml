@@ -1,0 +1,53 @@
+﻿@model DatosComplementarios
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-primary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Editar Dato Complementario</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" class="row">
+            <div class="border p-3">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="form-floatinging py-2 col-12">
+                    <label asp-for="ID_Estudiante" class="mb-2"></label>
+                    <input asp-for="ID_Estudiante" class="form-control border-0 shadow" />
+                    <span asp-validation-for="ID_Estudiante" class="text-danger"></span>
+                </div>
+                <div class="form-floatinging py-2 col-12">
+                    <label asp-for="Comportamiento" class="mb-2"></label>
+                    <input asp-for="Comportamiento" class="form-control border-0 shadow mb-3" />
+                    <span asp-validation-for="Comportamiento" class="text-danger"></span>
+                </div>
+                <div class="form-floatinging py-2 col-12">
+                    <label asp-for="ParticipacionActividadesExt" class="mb-2"></label>
+                    <input asp-for="ParticipacionActividadesExt" class="form-control border-0 shadow mb-3" />
+                    <span asp-validation-for="ParticipacionActividadesExt" class="text-danger"></span>
+                </div>
+                <div class="form-floatinging py-2 col-12">
+                    <label asp-for="ApoyoFamiliar" class="mb-2"></label>
+                    <input asp-for="ApoyoFamiliar" class="form-control border-0 shadow mb-3" />
+                    <span asp-validation-for="ApoyoFamiliar" class="text-danger"></span>
+                </div>
+                <div class="form-floatinging py-2 col-12">
+                    <label asp-for="InformacionMedica" class="mb-2"></label>
+                    <input asp-for="InformacionMedica" class="form-control border-0 shadow mb-3" />
+                    <span asp-validation-for="InformacionMedica" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-info form-control">Editar</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <a asp-controller="Complementario" asp-action="Index" class="btn btn-outline-primary border form-control">
+                            Back to list
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

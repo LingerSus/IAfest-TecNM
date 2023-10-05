@@ -1,0 +1,61 @@
+﻿@model List<IAfest.Models.Alerta>
+
+<div class="flex">
+    <div class="card shadow border-0 mt-4" style="width:100%">
+        <div class="card-header bg-danger bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="text-white py-2">Lista de Estudiantes</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body< p-2">
+            <div class="container">
+                <div class="row pt-4 pb-3">
+                    <div class="col-12 text-end">
+                        <a asp-controller="Alerta" asp-action="Create" class="btn btn-success">
+                            <i class="bi bi-plus-circle"></i> Buscar Nuevas Alertas
+                        </a>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Id Alerta</th>
+                            <th>Id Estudiante</th>
+                            <th>Fecha Alerta</th>
+                            <th>Tipo Alerta</th>
+                            <th>Descripcion</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model.OrderByDescending(u => u.ID_Alerta))
+                        {
+                            @if(obj.Mostrar == 1)
+                            {
+                                <tr>
+                                    <td>@obj.ID_Alerta</td>
+                                    <td>@obj.ID_Estudiante</td>
+                                    <td>@obj.FechaAlerta</td>
+                                    <td>@obj.TipoAlerta</td>
+                                    <td>@obj.DescripcionAlerta</td>
+                                    <td class="text-center">
+                                        <div class="w-75 btn-group" role="group">
+                                            <a asp-controller="Alerta" asp-action="Intervencion" asp-route-id="@obj.ID_Alerta" class="btn btn-info text-white">
+                                                <i class="bi bi-sign-intersection"> Intervencion</i>
+                                            </a>
+                                            <a asp-controller="Alerta" asp-action="Ignorar" asp-route-id="@obj.ID_Alerta" class="btn btn-danger text-white">
+                                                <i class="bi bi-backspace-reverse-fill"> Ignorar</i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@model List<IAfest.Models.DatosComplementarios>
+
+<div class="flex">
+    <div class="card shadow border-0 mt-4" style="width:100%">
+        <div class="card-header bg-danger bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="text-white py-2">Datos Complementarios</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-2">
+            <div class="container">
+                <div class="row pt-4 pb-3">
+                    <div class="col-12 text-end">
+                        <a asp-controller="Complementario" asp-action="Create" class="btn btn-success">
+                            <i class="bi bi-plus-circle"></i> Nuevo Dato Complementario
+                        </a>
+                    </div>
+                </div>
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Id Estudiante</th>
+                            <th>Comportamiento</th>
+                            <th>Act. Extra</th>
+                            <th>Apoyo Familiar</th>
+                            <th>Info. Medica</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var obj in Model.OrderByDescending(u => u.ID_Estudiante))
+                        {
+                            <tr>
+                                <td>@obj.ID_Estudiante</td>
+                                <td>@obj.Comportamiento</td>
+                                <td>@obj.ParticipacionActividadesExt</td>
+                                <td>@obj.ApoyoFamiliar</td>
+                                <td>@obj.InformacionMedica</td>
+                                <td class="text-center">
+                                    <div class="w-75 btn-group" role="group">
+                                        <a asp-controller="Complementario" asp-action="Edit" asp-route-id="@obj.ID_Estudiante" class="btn btn-info text-white">
+                                            <i class="bi bi-pencil-square"> Editar</i>
+                                        </a>
+                                        <a asp-controller="Complementario" asp-action="Delete" asp-route-id="@obj.ID_Estudiante" class="btn btn-danger text-white">
+                                            <i class="bi bi-trash"> Eliminar</i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
