@@ -27,52 +27,84 @@ namespace IAfest.Controllers
         [HttpPost]
         public IActionResult Create(Intervencion objIntervencion)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _db.HistorialIntervenciones.Add(objIntervencion);
-                _db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    _db.HistorialIntervenciones.Add(objIntervencion);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(objIntervencion);
+            }
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index");
             }
-            return View(objIntervencion);
+            
         }
 
         public IActionResult Edit(int? id)
         {
-            if (id == null || id == 0)
+            try
             {
-                return NotFound();
-            }
+                if (id == null || id == 0)
+                {
+                    return NotFound();
+                }
 
-            var objIntervencion = _db.HistorialIntervenciones.Find(id);
-            if (objIntervencion == null)
-            {
-                return NotFound();
+                var objIntervencion = _db.HistorialIntervenciones.Find(id);
+                if (objIntervencion == null)
+                {
+                    return NotFound();
+                }
+                return View(objIntervencion);
             }
-            return View(objIntervencion);
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
         [HttpPost]
         public IActionResult Edit(Intervencion objIntervencion)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _db.HistorialIntervenciones.Update(objIntervencion);
-                _db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    _db.HistorialIntervenciones.Update(objIntervencion);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(objIntervencion);
+            }
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index");
             }
-            return View(objIntervencion);
+            
         }
 
         public IActionResult Delete(int id)
         {
-            var resultado = _db.HistorialIntervenciones.Find(id);
-            if (resultado == null)
+            try
             {
-                return NotFound();
+                var resultado = _db.HistorialIntervenciones.Find(id);
+                if (resultado == null)
+                {
+                    return NotFound();
+                }
+                _db.HistorialIntervenciones.Remove(resultado);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            _db.HistorialIntervenciones.Remove(resultado);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
+           
         }
     }
 }

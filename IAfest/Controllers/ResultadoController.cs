@@ -27,13 +27,21 @@ namespace IAfest.Controllers
         [HttpPost]
         public IActionResult Create(ResultadoAcademico resultado)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _db.ResultadosAcademicos.Add(resultado);
-                _db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    _db.ResultadosAcademicos.Add(resultado);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index");
             }
-            return View();
+            
         }
 
         public IActionResult Edit(int id)
@@ -49,25 +57,42 @@ namespace IAfest.Controllers
         [HttpPost]
         public IActionResult Edit(ResultadoAcademico resultado)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _db.ResultadosAcademicos.Update(resultado);
-                _db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    _db.ResultadosAcademicos.Update(resultado);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(resultado);
+            }
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index");
             }
-            return View(resultado);
+
+           
         }
 
         public IActionResult Delete(int id)
         {
-            var resultado = _db.ResultadosAcademicos.Find(id);
-            if (resultado == null)
+            try
             {
-                return NotFound();
+                var resultado = _db.ResultadosAcademicos.Find(id);
+                if (resultado == null)
+                {
+                    return NotFound();
+                }
+                _db.ResultadosAcademicos.Remove(resultado);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            _db.ResultadosAcademicos.Remove(resultado);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
     }
 }

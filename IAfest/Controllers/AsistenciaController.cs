@@ -27,31 +27,39 @@ namespace IAfest.Controllers
         [HttpPost]
         public IActionResult Create(Asistencia asistencia)
         {
-            // Get the pass 3 records from the student in asistencia
-            var asistencias = _db.RegistrosAsistencia.Where(x => x.ID_Estudiante == asistencia.ID_Estudiante).ToList();
-            // If the last 3 have been "Tarde" create an alert
-            if (asistencias.Count > 2 && asistencias[asistencias.Count - 1].EstadoAsistencia == "Ausente" && asistencias[asistencias.Count - 2].EstadoAsistencia == "Ausente" && asistencias[asistencias.Count - 3].EstadoAsistencia == "Ausente")
+            try
             {
-                // Get estudiante
-                var estudiante = _db.Estudiantes.Find(asistencia.ID_Estudiante);
-                var alerta = new Alerta
+                // Get the pass 3 records from the student in asistencia
+                var asistencias = _db.RegistrosAsistencia.Where(x => x.ID_Estudiante == asistencia.ID_Estudiante).ToList();
+                // If the last 3 have been "Tarde" create an alert
+                if (asistencias.Count > 2 && asistencias[asistencias.Count - 1].EstadoAsistencia == "Ausente" && asistencias[asistencias.Count - 2].EstadoAsistencia == "Ausente" && asistencias[asistencias.Count - 3].EstadoAsistencia == "Ausente")
                 {
-                    ID_Estudiante = asistencia.ID_Estudiante,
-                    FechaAlerta = DateTime.Now,
-                    TipoAlerta = "Asistencia",
-                    DescripcionAlerta = "El estudiante " + estudiante.NombreCompleto + " ha llegado tarde 3 veces seguidas",
-                    Mostrar = 1
-                };
-                _db.Alertas.Add(alerta);
-                _db.SaveChanges();
+                    // Get estudiante
+                    var estudiante = _db.Estudiantes.Find(asistencia.ID_Estudiante);
+                    var alerta = new Alerta
+                    {
+                        ID_Estudiante = asistencia.ID_Estudiante,
+                        FechaAlerta = DateTime.Now,
+                        TipoAlerta = "Asistencia",
+                        DescripcionAlerta = "El estudiante " + estudiante.NombreCompleto + " ha llegado tarde 3 veces seguidas",
+                        Mostrar = 1
+                    };
+                    _db.Alertas.Add(alerta);
+                    _db.SaveChanges();
+                }
+                if (ModelState.IsValid)
+                {
+                    _db.RegistrosAsistencia.Add(asistencia);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View();
             }
-            if (ModelState.IsValid)
+            catch (Exception ex)
             {
-                _db.RegistrosAsistencia.Add(asistencia);
-                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View();
+            
         }
 
         public IActionResult Edit(int id)
@@ -67,25 +75,41 @@ namespace IAfest.Controllers
         [HttpPost]
         public IActionResult Edit(Asistencia asistencia)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _db.RegistrosAsistencia.Update(asistencia);
-                _db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    _db.RegistrosAsistencia.Update(asistencia);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(asistencia);
+            }
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index");
             }
-            return View(asistencia);
+            
         }
 
         public IActionResult Delete(int id)
         {
-            var asistencia = _db.RegistrosAsistencia.Find(id);
-            if (asistencia == null)
+            try
             {
-                return NotFound();
+                var asistencia = _db.RegistrosAsistencia.Find(id);
+                if (asistencia == null)
+                {
+                    return NotFound();
+                }
+                _db.RegistrosAsistencia.Remove(asistencia);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            _db.RegistrosAsistencia.Remove(asistencia);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
 

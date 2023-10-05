@@ -27,47 +27,79 @@ namespace IAfest.Controllers
         [HttpPost]
         public IActionResult Create(DatosComplementarios complementario)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _db.Add(complementario);
-                _db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    _db.Add(complementario);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index");
             }
-            return View();
+            
         }
 
         public IActionResult Edit(int id)
         {
-            var complementario = _db.DatosComplementarios.Find(id);
-            if (complementario == null)
+            try
             {
-                return NotFound();
+                var complementario = _db.DatosComplementarios.Find(id);
+                if (complementario == null)
+                {
+                    return NotFound();
+                }
+                return View(complementario);
             }
-            return View(complementario);
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
         [HttpPost]
         public IActionResult Edit(DatosComplementarios complementario)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _db.Update(complementario);
-                _db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    _db.Update(complementario);
+                    _db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index");
             }
-            return View();
+            
         }
 
         public IActionResult Delete(int id)
         {
-            var complementario = _db.DatosComplementarios.Find(id);
-            if (complementario == null)
+            try
             {
-                return NotFound();
+                var complementario = _db.DatosComplementarios.Find(id);
+                if (complementario == null)
+                {
+                    return NotFound();
+                }
+                _db.Remove(complementario);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            _db.Remove(complementario);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
     }
 }
